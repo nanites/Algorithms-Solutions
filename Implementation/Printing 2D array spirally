@@ -1,0 +1,56 @@
+import java.util.*;
+
+public class Test {
+	public static void main(String args[]) throws Exception {
+		Scanner in = new Scanner(System.in);
+		int rowEndPos = in.nextInt();
+		int colEndPos = in.nextInt();
+		int rowStartPos = 0;
+		int colStartPos = 0;
+		int[][] arr = new int[rowEndPos][colEndPos];
+		for(int i = 0 ; i < rowEndPos ; i++)
+		{
+			for(int j = 0 ; j < colEndPos ; j++)
+			{
+				arr[i][j] = in.nextInt();
+			}
+		}
+		in.close();
+		while(rowStartPos<rowEndPos && colStartPos<colEndPos)
+		{
+			//Print the top row only
+			for(int i=colStartPos;i<colEndPos;i++)
+			{
+				System.out.println(arr[rowStartPos][i]);
+			}
+			rowStartPos++;
+			
+			//Print the last column only
+			for(int i=rowStartPos;i<rowEndPos;i++)
+			{
+				System.out.println(arr[i][colEndPos-1]);
+			}
+			colEndPos--;
+			
+			//Print the last row only
+			if(rowStartPos<rowEndPos)
+			{
+				for(int i=colEndPos-1;i>=1;i--)
+				{
+					System.out.println(arr[rowEndPos-1][i]);
+				}
+				rowEndPos--;
+			}
+			
+			//Print the first column only
+			if(colStartPos<colEndPos)
+			{
+				for(int i=rowEndPos;i>=rowStartPos;i--)
+				{
+					System.out.println(arr[i][colStartPos]);
+				}
+				colStartPos++;
+			}
+		}
+	}
+}
