@@ -1,0 +1,39 @@
+import java.util.Scanner;
+
+public class Test {
+	public static void main(String args[]) throws Exception {
+		int[] arrayToRotate = {1,2,3,4,5,6,7,8,9,10};
+		int rotateBy = 4;
+		System.out.println("Original Array");
+		for(Integer item:arrayToRotate)
+		{
+			System.out.print("["+item+"]");
+		}
+		rotate(arrayToRotate, rotateBy);
+		System.out.println("");
+		System.out.println("Resulting Array");
+		for(Integer item:arrayToRotate)
+		{
+			System.out.print("["+item+"]");
+		}
+	}
+
+	private static void rotate(int[] arrayToRotate, int rotateBy) {
+		reverse(arrayToRotate, 0, rotateBy-1);
+		reverse(arrayToRotate, rotateBy, arrayToRotate.length-1);
+		reverse(arrayToRotate, 0, arrayToRotate.length-1);
+	}
+
+	private static void reverse(int[] arrayToReverse, int startPos, int endPos) {
+		// TODO Auto-generated method stub
+		while(startPos<endPos)
+		{
+			int temp = arrayToReverse[startPos];
+			arrayToReverse[startPos] = arrayToReverse[endPos];
+			arrayToReverse[endPos] = temp;
+			startPos++;
+			endPos--;
+		}
+		
+	}
+}
