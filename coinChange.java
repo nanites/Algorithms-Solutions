@@ -1,38 +1,34 @@
-package InternIntPractice;
+import java.util.*;
 
 public class coinChange {
+	public static void main(String args[]) {
+		Scanner scan = new Scanner(System.in);
+		int n = scan.nextInt();
+		int[] ratings = new int[n];
+		int[] candy = new int[n];
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		for (int i = 0; i < n; i++) {
+			ratings[i] = scan.nextInt();
+		}
 
-	}
-	
-	
-	public int minimumCoinBottomUp(int total, int coins[]){
-        int T[] = new int[total + 1];
-        int R[] = new int[total + 1];
-        T[0] = 0;
-        for(int i=1; i <= total; i++){
-            T[i] = Integer.MAX_VALUE-1;
-            R[i] = -1;
-        }
-        for(int j=0; j < coins.length; j++){
-            for(int i=1; i <= total; i++){
-                if(i >= coins[j]){
-                    if (T[i - coins[j]] + 1 < T[i]) {
-                        T[i] = 1 + T[i - coins[j]];
-                        R[i] = j;
-                    }
-                }
-            }
-        }
-        printCoinCombination(R, coins);
-        return T[total];
-}
+		int len = ratings.length;
 
+		candy[0] = 1;
+		for (int i = 1; i < len; ++i) {
+			if (ratings[i] > ratings[i - 1]) {
+				candy[i] = candy[i - 1] + 1;
+			} else {
+				candy[i] = 1;
+			}
+		}
 
-	private void printCoinCombination(int[] r, int[] coins) {
-		// TODO Auto-generated method stub
-		
+		int total = candy[len - 1];
+		for (int i = len - 2; i >= 0; --i) {
+			if (ratings[i] > ratings[i + 1] && candy[i] <= candy[i + 1]) {
+				candy[i] = candy[i + 1] + 1;
+			}
+			total += candy[i];
+		}
+		System.out.println(total);
 	}
 }
