@@ -1,0 +1,72 @@
+import java.util.*;
+
+public class infixToPostfix {
+	public static void main(String[] args){
+		String str = "(1+1/1*(1+1)-1)";
+		Stack<Character> s = new Stack<Character>();
+		String postfix = "";
+		for(int i = 0; i < str.length(); i++){
+			char c = str.charAt(i);
+			if(c == '+' || c == '-' || c == '*' || c == '/'){
+				while(!s.isEmpty() && prec(c) <= prec(s.peek())){
+					postfix = postfix + s.pop();
+				}
+				s.push(c);
+			}else if (c == '('){
+				s.push(c);
+			}else if (c == ')'){
+				while(!s.isEmpty() && s.peek() != '('){
+					postfix = postfix + s.pop();
+				}
+				s.pop();
+			}else{
+				postfix = postfix + c;
+			}
+		}
+		//System.out.println(postfix);
+		
+		//Calculating Expression
+		Stack<Integer> stack = new Stack<Integer>();
+		for(int i = 0; i < postfix.length(); i++){
+			char c = postfix.charAt(i);
+			if(c == '+' || c == '-' || c == '*' || c == '/'){
+				int a = stack.pop();
+				int b = stack.pop();
+				int result;
+				switch(c){
+				case '*':
+					result = a*b;
+					stack.push(result);
+					break;
+				case '/':
+					result = b/a;
+					stack.push(result);
+					break;
+				case '+':
+					result = a+b;
+					stack.push(result);
+					break;
+				case '-':
+					result = b-a;
+					stack.push(result);
+					break;
+				}
+			}else{
+				stack.push(c-'0');
+			}
+		}
+		
+		System.out.println(stack.pop());
+	}
+
+	private static int prec(char c) {
+		// TODO Auto-generated method stub
+		if(c == '+' || c == '-'){
+			return 1;
+		}
+		if(c == '/' || c == '*'){
+			return 2;
+		}
+		return -1;
+	}
+}
